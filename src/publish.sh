@@ -19,6 +19,9 @@ echo "IMAGE_IDs: $IMAGE_IDs"
 while read -r IMAGE_ID; do
 
     echo "IMAGE_ID: $IMAGE_ID"
+    echo "BASE: $(basename ${GITHUB_REPOSITORY})"
+    echo "NAME : $(docker inspect --format '{{ index .Config.Labels.name }}' $IMAGE_ID)"
+    
     # get the name label
     NAME=$(basename ${GITHUB_REPOSITORY}).$(docker inspect --format '{{ index .Config.Labels.name }}' $IMAGE_ID)
     PUSH="docker.pkg.github.com/${GITHUB_REPOSITORY}/$NAME:$VERSION"
